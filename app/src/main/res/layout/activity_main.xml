@@ -88,4 +88,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinnerTipoUsuario" />
 
+    <include
+        layout="@layout/tipo_usuario"
+        android:id="@+id/miframelayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/spinnerTipoUsuario"
+        app:layout_constraintBottom_toTopOf="@id/buttonDarAlta"
+        />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

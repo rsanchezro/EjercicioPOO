@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
 }
-
 android {
     namespace = "com.example.ejerciciopoo"
     compileSdk {
@@ -10,16 +9,12 @@ android {
 buildFeatures{
     viewBinding=true
 }
-
-
-
     defaultConfig {
         applicationId = "com.example.ejerciciopoo"
         minSdk = 24
         targetSdk = 37
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 

@@ -3,6 +3,8 @@ package com.example.ejerciciopoo
 import android.app.DatePickerDialog
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.Toast
@@ -45,13 +47,39 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        //Preparamos el spinner
+        //************** SPINNER *************************/
         val adaptador_spinner= ArrayAdapter<String>(this,
             android.R.layout.simple_spinner_item,
-            arrayOf("UsuarioNormal","Administrador"))
+            arrayOf("UsuarioNormal","Adminastrador"))
         adaptador_spinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
         mibinding.spinnerTipoUsuario.adapter=adaptador_spinner
+
+        //Añado escuchador al spinner
+
+        mibinding.spinnerTipoUsuario.onItemSelectedListener=
+        object: AdapterView.OnItemSelectedListener {
+
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                if(p0?.selectedItem=="UsuarioNormal")
+                {
+                    mibinding.miframelayout.editTextNivel.visibility=View.VISIBLE
+                    mibinding.miframelayout.editTextArea.visibility=View.GONE
+                }
+                else
+                {
+                    mibinding.miframelayout.editTextNivel.visibility=View.GONE
+                    mibinding.miframelayout.editTextArea.visibility=View.VISIBLE
+                }
+
+
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+            }
+        }
+
+
 
         //Defino el escuchado al hacer click en el boton añadir Usuario
         mibinding.buttonDarAlta.setOnClickListener{
@@ -70,7 +98,8 @@ class MainActivity : AppCompatActivity() {
             usuario.apply {
                 login=mibinding.editTextLogin.toString()
                 password=mibinding.editTextPassword.toString()
-               // fechaNacimiento= SimpleDateFormat("dd-MM-yyyy",Locale.getDefault()).parse(mibinding.editTextFechaNacimiento.toString())
+                if(mibinding.editTextFechaNacimiento.toString()!="")
+                    fechaNacimiento= SimpleDateFormat("dd-MM-yyyy",Locale.getDefault()).parse(mibinding.editTextFechaNacimiento.text.toString())
                email=mibinding.editTextEmail.toString()
             }
 
@@ -85,8 +114,13 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this,"Usuario ya existe",Toast.LENGTH_LONG).show()
             }
             else
-            {
+            {//Usuario no existe, se añade a la lista
+                //Vaciamos los campos del formulario
+                limpiar_campos()
+
                 lista_usuarios.add(usuario)
+                //Mostramos un Toast
+                Toast.makeText(this,"Usuario añadido correctamente",Toast.LENGTH_SHORT).show()
             }
 
             lista_usuarios.indexOf(usuario)
@@ -114,4 +148,13 @@ class MainActivity : AppCompatActivity() {
 
 
     }
+
+    fun limpiar_campos() {
+        mibinding.editTextLogin.setText("")
+        mibinding.editTextPassword.setText("")
+        mibinding.editTextFechaNacimiento.setText("")
+        mibinding.editTextEmail.setText("")
+
+    }
 }
+
